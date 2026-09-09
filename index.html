@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Trading Strategy Optimizer for TradingView</title>
+<meta name="description" content="Privacy policy for the Trading Strategy Optimizer Chrome extension for TradingView.">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #ffffff; --fg: #1c2024; --muted: #5b6470;
+    --rule: #e3e6ea; --accent: #4f46e5; --code-bg: #f4f5f7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0f1115; --fg: #e6e8ec; --muted: #9aa1ad;
+            --rule: #262a31; --accent: #8b87f5; --code-bg: #1a1d23; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  main { max-width: 46rem; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+  h1 { font-size: 1.75rem; line-height: 1.25; letter-spacing: -.02em; margin: 0 0 .4rem; }
+  h2 { font-size: 1.15rem; letter-spacing: -.01em; margin: 2.4rem 0 .6rem;
+       padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+  h2:first-of-type { border-top: 0; padding-top: 0; }
+  .updated { color: var(--muted); font-size: .9rem; margin: 0 0 2rem; }
+  p, li { margin: 0 0 1rem; }
+  ul { padding-left: 1.25rem; }
+  li { margin-bottom: .6rem; }
+  strong { font-weight: 620; }
+  code { background: var(--code-bg); padding: .12em .38em; border-radius: 4px;
+         font: .875em/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 3rem 0 1.5rem; }
+  footer { color: var(--muted); font-size: .9rem; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Privacy Policy — Trading Strategy Optimizer for TradingView</h1>
+<p class="updated">Last updated: 8 September 2026</p>
+
+<h2>The short version</h2>
+<p>This extension does not collect, sell, or share your data. There is no analytics,
+no tracking, and no account. It makes exactly one kind of network request, and only
+if you buy a licence: it asks Gumroad whether your licence key is valid.</p>
+
+<h2>What it stores, and where</h2>
+<p>Everything it saves is written to your browser's local storage on your own
+machine, and stays there:</p>
+<ul>
+  <li><strong>Parameter setups</strong> — the ranges, steps and priorities you
+      configure for each strategy, so they are still there next time you open the
+      panel.</li>
+  <li><strong>Optimizer preferences</strong> — your chosen metric, search method,
+      filters and cycle count.</li>
+  <li><strong>Licence key</strong> — if you have purchased Pro, the key you
+      entered, along with the details Gumroad returned about that purchase (the
+      email address on the order, whether it is monthly or yearly, and how many
+      times the key has been activated) and the date it was last confirmed.</li>
+  <li><strong>A random installation id</strong> — a generated identifier with no
+      connection to you or your machine, used only to tell one browser from
+      another.</li>
+</ul>
+<p>You can erase all of it at any time by removing the extension, or by clearing
+site data for tradingview.com in Chrome's settings.</p>
+
+<h2>What it reads</h2>
+<p>While you are on a <code>tradingview.com/chart/</code> page, the extension reads
+the Pine strategy you have applied to that chart — its input parameters and the
+results its backtest produces — and writes new parameter values back to it while an
+optimization is running. This happens entirely inside your browser tab. None of it
+is sent anywhere.</p>
+<p>It does not read any other page, any other tab, your browsing history, your
+TradingView account details, your credentials, or anything else on the site.</p>
+
+<h2>Network requests</h2>
+<p><strong>Free plan: none.</strong> If you never enter a licence key, the extension
+never contacts anything.</p>
+<p><strong>Pro plan: licence checks only.</strong> When you activate a licence, and
+roughly twice a day afterwards while Chrome is running, the extension sends a
+request to <code>api.gumroad.com</code> — the licensing service of the payment
+provider — containing:</p>
+<ul>
+  <li>your licence key,</li>
+  <li>the product id of this extension,</li>
+  <li>a flag saying whether this check should count as a new activation (true only
+      the first time you enter a key on a given browser).</li>
+</ul>
+<p>That is the whole payload. No chart data, no strategy, no parameters, no results,
+no browsing information, and nothing identifying you beyond the key you chose to
+enter. Gumroad replies with the status of your purchase, and that reply is what
+decides whether Pro is on. Gumroad's handling of the request is covered by their own
+privacy policy.</p>
+<p>If the check cannot be made — you are offline, or something on your network blocks
+the domain — Pro keeps working for 14 days on the last confirmed answer, then pauses
+until it can be confirmed again.</p>
+<p>Pressing "Get Pro" opens the purchase page in a new tab. That is the only other
+outbound action, and it only happens when you click it.</p>
+
+<h2>Files you export</h2>
+<p>CSV and JSON exports are generated in your browser and saved by Chrome's normal
+download mechanism. They are never uploaded.</p>
+
+<h2>Changes</h2>
+<p>If this policy changes, the updated version will be published here with a new
+date, and any change that affects what data is handled will be called out in the
+extension's release notes.</p>
+
+<h2>Contact</h2>
+<p>Questions about this policy:
+<a href="mailto:your-support-email@example.com">your-support-email@example.com</a></p>
+
+<hr>
+<footer>This is an independent extension. It is not made by, affiliated with,
+endorsed by, or sponsored by TradingView Inc.</footer>
+
+</main>
+</body>
+</html>
