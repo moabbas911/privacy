@@ -42,82 +42,115 @@
 <main>
 
 <h1>Privacy Policy — Trading Strategy Optimizer for TradingView</h1>
-<p class="updated">Last updated: 8 September 2026</p>
+<p class="updated">Last updated: 26 September 2026 (version 2.2.0)</p>
 
 <h2>The short version</h2>
-<p>This extension does not collect, sell, or share your data. There is no analytics,
-no tracking, and no account. It makes exactly one kind of network request, and only
-if you buy a licence: it asks Gumroad whether your licence key is valid.</p>
-
+<p>The extension has no analytics, no tracking, no ads and no account of its own,
+and it does not sell or share anything about you. The only server it talks to
+itself is Gumroad's licence service, and only if you enter a Pro licence key.
+The backtests it runs are run by TradingView, exactly as if you changed your
+strategy's settings by hand.</p>
 <h2>What it stores, and where</h2>
-<p>Everything it saves is written to your browser's local storage on your own
-machine, and stays there:</p>
+<p>It keeps things in two places on your own computer.</p>
+<p><strong>In TradingView's site storage.</strong> The panel runs inside the TradingView chart
+page, so the few things it remembers about the panel are saved in the browser
+storage that belongs to tradingview.com:</p>
 <ul>
-  <li><strong>Parameter setups</strong> — the ranges, steps and priorities you
-      configure for each strategy, so they are still there next time you open the
-      panel.</li>
-  <li><strong>Optimizer preferences</strong> — your chosen metric, search method,
-      filters and cycle count.</li>
-  <li><strong>Licence key</strong> — if you have purchased Pro, the key you
-      entered, along with the details Gumroad returned about that purchase (the
-      email address on the order, whether it is monthly or yearly, and how many
-      times the key has been activated) and the date it was last confirmed.</li>
-  <li><strong>A random installation id</strong> — a generated identifier with no
-      connection to you or your machine, used only to tell one browser from
-      another.</li>
+<li>where you left the panel and how big you made it;</li>
+<li><strong>saved setups</strong> (a Pro feature, only when you press Save &amp; Run): for one strategy,
+  the parameter ranges, steps and priorities you chose, plus the metric, search
+  method, filters and number of cycles;</li>
+<li><strong>a note while a run is going</strong>: which strategy it is working on and its name,
+  its settings before the run, the ids of the temporary copies it put on the
+  chart, the address path of the chart layout (such as <code>/chart/AbCd1234/</code>) and
+  when the run started — so that if the browser crashes mid-run, the next load
+  of that chart can offer to clean up. The note is deleted when the run ends
+  normally. If the tab is closed or crashes mid-run it is kept until the next
+  load of that chart has checked it (and you have finished or dismissed the
+  clean-up), and deleted after 30 days in any case. While the run is going, the
+  page also holds a browser lock named after the run, which is how other tabs
+  can tell the run is still alive; the browser releases it when the run ends or
+  the page closes.</li>
 </ul>
-<p>You can erase all of it at any time by removing the extension, or by clearing
-site data for tradingview.com in Chrome's settings.</p>
-
-<h2>What it reads</h2>
-<p>While you are on a <code>tradingview.com/chart/</code> page, the extension reads
-the Pine strategy you have applied to that chart — its input parameters and the
-results its backtest produces — and writes new parameter values back to it while an
-optimization is running. This happens entirely inside your browser tab. None of it
-is sent anywhere.</p>
-<p>It does not read any other page, any other tab, your browsing history, your
-TradingView account details, your credentials, or anything else on the site.</p>
-
+<p>Because this is tradingview.com's storage, scripts running on TradingView's
+pages can read it, as they can anything else on those pages. It holds strategy
+parameter names and numbers, nothing about you. To erase it, clear the site data
+for tradingview.com in Chrome (Settings → Privacy and security → Site data).
+Removing the extension does not clear it.</p>
+<p><strong>In the extension's own storage</strong>, which websites cannot read:</p>
+<ul>
+<li><strong>Your licence</strong>, if you activate Pro: the licence key, the subscription's
+  status (active, cancelled with the date it ends, ended, refunded, and so on),
+  whether it is monthly or yearly, how many activations Gumroad has counted for
+  the key, and when it was activated and last confirmed.</li>
+<li><strong>An activation note</strong> for each key activated on this browser: a one-way
+  digest of the key (not the key itself) and which activation it was. It is what
+  stops a removed and re-entered key from using up another activation, so it is
+  kept when you press "Remove from this browser".</li>
+</ul>
+<p>Removing the extension deletes both. "Remove from this browser" deletes the
+licence but keeps the activation note.</p>
+<p>It does not store your email address, your name, your TradingView username, or
+any payment details.</p>
+<h2>What it reads and changes on the chart</h2>
+<p>On <code>tradingview.com/chart/</code> pages only, the extension reads the Pine strategy on
+the chart: its name, its inputs and the Strategy Tester report each backtest
+produces, plus the chart's symbol and timeframe (shown in the panel and written
+into exported files). While
+an optimization runs it writes candidate settings to the strategy's inputs and
+adds temporary copies of the strategy to the chart so several backtests can run
+side by side. It removes the copies and puts your original settings back when
+the run ends.</p>
+<p>It does not read other pages or tabs, your browsing history, your TradingView
+account details, passwords, watchlists, alerts or orders.</p>
 <h2>Network requests</h2>
-<p><strong>Free plan: none.</strong> If you never enter a licence key, the extension
-never contacts anything.</p>
-<p><strong>Pro plan: licence checks only.</strong> When you activate a licence, and
-roughly twice a day afterwards while Chrome is running, the extension sends a
-request to <code>api.gumroad.com</code> — the licensing service of the payment
-provider — containing:</p>
+<p><strong>What TradingView sees.</strong> Every backtest is calculated by TradingView under your
+TradingView account, so TradingView receives each combination of settings that
+is tried — the same as if you typed them into the strategy's settings yourself.
+The extension adds nothing to those requests.</p>
+<p><strong>Free plan: nothing else.</strong> If you never enter a licence key, the extension
+makes no network requests of its own.</p>
+<p><strong>Pro plan: licence checks with Gumroad.</strong> The extension sends a request to
+<code>api.gumroad.com</code>, the licensing service of the store that sells Pro:</p>
 <ul>
-  <li>your licence key,</li>
-  <li>the product id of this extension,</li>
-  <li>a flag saying whether this check should count as a new activation (true only
-      the first time you enter a key on a given browser).</li>
+<li>when you activate a key (a check first, then — only if this browser has not
+  been counted for that key before — a second request that counts the
+  activation);</li>
+<li>about every 12 hours while Chrome is running, when you press Re-check, at most
+  once an hour when you open the panel, and when a chart page loads and the
+  licence has not been confirmed for over two weeks.</li>
 </ul>
-<p>That is the whole payload. No chart data, no strategy, no parameters, no results,
-no browsing information, and nothing identifying you beyond the key you chose to
-enter. Gumroad replies with the status of your purchase, and that reply is what
-decides whether Pro is on. Gumroad's handling of the request is covered by their own
-privacy policy.</p>
-<p>If the check cannot be made — you are offline, or something on your network blocks
-the domain — Pro keeps working for 14 days on the last confirmed answer, then pauses
-until it can be confirmed again.</p>
-<p>Pressing "Get Pro" opens the purchase page in a new tab. That is the only other
-outbound action, and it only happens when you click it.</p>
-
+<p>Each request contains your licence key, this extension's product id, and a flag
+saying whether to count an activation. Nothing else: no chart data, strategies,
+parameters, results or browsing information. Gumroad's reply describes the
+purchase (it includes the purchase email address); the extension keeps only the
+status details listed above and discards the rest. Gumroad's handling of the
+request is covered by Gumroad's privacy policy.</p>
+<p>If a check cannot be made, Pro keeps working for 14 days on the last confirmed
+answer, then pauses until it can be confirmed again. A cancelled subscription
+stops at the end of the period that was paid for.</p>
+<p>Pressing "Get Pro" opens the purchase page in a new tab. Nothing else is opened
+or sent.</p>
 <h2>Files you export</h2>
-<p>CSV and JSON exports are generated in your browser and saved by Chrome's normal
-download mechanism. They are never uploaded.</p>
-
+<p>CSV and JSON exports and parameter templates are created in your browser and
+saved through Chrome's normal download. The extension never uploads them.</p>
 <h2>Changes</h2>
-<p>If this policy changes, the updated version will be published here with a new
-date, and any change that affects what data is handled will be called out in the
-extension's release notes.</p>
-
+<p>2.2.0 (26 September 2026): the purchase email address is no longer stored or
+shown to the page; activation notes were added; a run now keeps a short
+recovery note in tradingview.com's site storage (kept after a crash until the chart has been checked, 30 days at most); this policy
+now also describes the tradingview.com site storage and what TradingView
+receives during backtests. An earlier version of this policy mentioned a random
+installation id; the extension never created one.</p>
+<p>Future changes will be published here with a new date, and any change to what
+data is handled will be called out in the release notes.</p>
 <h2>Contact</h2>
-<p>Questions about this policy:
-<a href="mailto:oldegypt@gmail.com">oldegypt@gmail.com</a></p>
+<p>Questions about this policy: <a href="mailto:oldegypt@gmail.com">oldegypt@gmail.com</a></p>
 
 <hr>
-<footer>This is an independent extension. It is not made by, affiliated with,
-endorsed by, or sponsored by TradingView Inc.</footer>
+<footer>
+<p>This is an independent extension. It is not made by, affiliated with, endorsed
+by, or sponsored by TradingView Inc.</p>
+</footer>
 
 </main>
 </body>
